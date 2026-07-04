@@ -23,6 +23,7 @@ AI-native board reporting platform for Senus PLC (a natural capital software com
 ## Where things live
 
 - `artifacts/api-server/src/metrics/deriveMetrics.js` — pure functions computing derived financial metrics (gross margin, EBITDA, working capital, cash runway, ROCE, etc.) from disclosure payloads. Copied verbatim from the user's spec; do not modify without checking `test/deriveMetrics.test.js` still passes.
+- `artifacts/api-server/src/extraction/` — AI extraction pipeline (Phase 2): `taxonomy.js` (fixed raw-metric taxonomy + category lookup), `callClaudeJson.js` (low-level Claude call, retry-once-on-bad-JSON, throws `ClaudeExtractionError`), `extractMetrics.js`/`extractRisks.js`/`extractEvents.js` (per-type Claude prompts), `diffRiskStatus.js` (semantic New/Updated/Unchanged classification), `periodMonths.js` (infers 6/12-month period length from `period_label` for cash-runway calc), `persistExtraction.js` (transactional inserts), `extract.js` (orchestrator — gates risk/event extraction on doc metadata, wires everything together). No HTTP endpoints yet — that's Phase 4 (backend API task).
 - `attached_assets/replit-build-prompt_1783199322997.md` — the original full build spec (verbatim DDL, taxonomy, phase breakdown). Source of truth for schema/behavior questions.
 - `.local/tasks/task-*.md` — the 4-phase project task breakdown (Foundation & DB → AI extraction → Backend API → Frontend).
 

@@ -1,1 +1,2 @@
 - [Plain-JS artifact conventions](plain-js-artifact-conventions.md) — how to run a no-TS backend/frontend inside this TS-first pnpm workspace template.
+- [Derived-metric NaN guard](derived-metrics-nan-guard.md) — deriveMetrics.js can yield NaN (not null) on partial input; callers persisting its output must filter NaN too.

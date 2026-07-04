@@ -9,6 +9,7 @@
     "db:migrate": "node db/migrate.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "pg": "^8.22.0",
