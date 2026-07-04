@@ -1,0 +1,28 @@
+Applying migration: 001_init.sql
+Applied 1 migration file(s).
+
+=== Columns ===
+disclosures.id (uuid)
+disclosures.source_document_id (uuid)
+disclosures.record_type (text)
+disclosures.category (text)
+disclosures.period_label (text)
+disclosures.consolidation_basis (text)
+disclosures.product_line (text)
+disclosures.materiality_rank (integer)
+disclosures.status (text)
+disclosures.payload (jsonb)
+disclosures.extracted_at (timestamp without time zone)
+source_documents.id (uuid)
+source_documents.filename (text)
+source_documents.doc_type (text)
+source_documents.period_covered (text)
+source_documents.audited (boolean)
+source_documents.in_scope (boolean)
+source_documents.uploaded_at (timestamp without time zone)
+
+=== Indexes on disclosures ===
+disclosures_pkey: CREATE UNIQUE INDEX disclosures_pkey ON public.disclosures USING btree (id)
+idx_disclosures_category: CREATE INDEX idx_disclosures_category ON public.disclosures USING btree (category)
+idx_disclosures_period: CREATE INDEX idx_disclosures_period ON public.disclosures USING btree (period_label)
+idx_disclosures_record_type: CREATE INDEX idx_disclosures_record_type ON public.disclosures USING btree (record_type)
