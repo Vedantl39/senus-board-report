@@ -2,3 +2,4 @@
 - [Derived-metric NaN guard](derived-metrics-nan-guard.md) — deriveMetrics.js can yield NaN (not null) on partial input; callers persisting its output must filter NaN too.
 - [pnpm workspace subpackage installs](pnpm-workspace-package-installs.md) — `installLanguagePackages` with `cwd` can still target the workspace root; verify and fall back to manual `package.json` edit + `pnpm install --filter`.
 - [Express sessions behind Replit's proxy](express-session-behind-proxy.md) — secure cookies need `app.set("trust proxy", 1)` or they silently never get set in production.
+- [Audience view category matching](audience-view-category-matching.md) — audience filters match category strings exact/verbatim (e.g. "Growth & Revenue"), not slugified; mismatches fail silently as empty views.

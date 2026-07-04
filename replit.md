@@ -29,6 +29,12 @@ AI-native board reporting platform for Senus PLC (a natural capital software com
 - `artifacts/api-server/src/routes/` — `auth.js` (login/logout/session, public), `disclosures.js` (generic filtered query), `views.js` (4 audience endpoints), `risks.js` (risk register). All routes except `health` and `auth` sit behind `requireAuth` (see `src/middlewares/requireAuth.js`), wired in `routes/index.js`.
 - `attached_assets/replit-build-prompt_1783199322997.md` — the original full build spec (verbatim DDL, taxonomy, phase breakdown). Source of truth for schema/behavior questions.
 - `.local/tasks/task-*.md` — the 4-phase project task breakdown (Foundation & DB → AI extraction → Backend API → Frontend).
+- `artifacts/board-report/src/api/client.js` — shared `fetch` wrapper (`credentials: "include"`, base `${BASE_URL}api`) used by every request; no Orval, plain `fetch`.
+- `artifacts/board-report/src/context/AuthContext.jsx` — session state via `/api/session`, login/logout, gates the whole app (`LoginPage` vs `ReportShell`) in `App.jsx`.
+- `artifacts/board-report/src/pages/ReportShell.jsx` + `src/pages/views/*View.jsx` — persistent audience switcher (Management/Board/Investors/Lenders) driving `useAudienceView` (`src/hooks/useAudienceView.js`), which fetches the matching `/api/views/{audience}` endpoint.
+- `artifacts/board-report/src/components/RiskRegister.jsx` — groups risks by category, ordered by `materiality_rank`, with `StatusPill` badges (red/amber/gray for New/Updated/Unchanged).
+- `artifacts/board-report/src/components/badges/` — `UnauditedBadge`, `ConsolidationBadge` (Consolidated/Standalone), `StatusPill`, reused across `MetricsTable`/`RiskRegister`/`EventList`.
+- `artifacts/board-report/src/index.css` — two theme identities: `:root` (Senus earth-tone, post-login report UI) and `.dark` (Assiduous dark/coral, login screen only), applied via `theme-senus`/`theme-assiduous dark` wrapper classes in `App.jsx`.
 
 ## Architecture decisions
 

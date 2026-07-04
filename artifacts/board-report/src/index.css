@@ -93,7 +93,7 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* LIGHT MODE */
+/* LIGHT MODE (default — Senus natural/earth-tone identity, used post-login) */
 :root {
   --button-outline: rgba(0,0,0, .10);
   --badge-outline: rgba(0,0,0, .05);
@@ -105,67 +105,67 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .08);
 
-  --background: red; /*replace with H S L */
+  --background: 40 30% 97%;
 
-  --foreground: red; /*replace with H S L */
+  --foreground: 150 25% 15%;
 
-  --border: red; /*replace with H S L */
+  --border: 40 15% 85%;
 
-  --card: red; /*replace with H S L */
+  --card: 40 30% 99%;
 
-  --card-foreground: red; /*replace with H S L */
+  --card-foreground: 150 25% 15%;
 
-  --card-border: red; /*replace with H S L */
+  --card-border: 40 15% 85%;
 
-  --sidebar: red; /*replace with H S L */
+  --sidebar: 40 25% 95%;
 
-  --sidebar-foreground: red; /*replace with H S L */
+  --sidebar-foreground: 150 25% 15%;
 
-  --sidebar-border: red; /*replace with H S L */
+  --sidebar-border: 40 15% 85%;
 
-  --sidebar-primary: red; /*replace with H S L */
+  --sidebar-primary: 140 35% 32%;
 
-  --sidebar-primary-foreground: red; /*replace with H S L */
+  --sidebar-primary-foreground: 40 30% 97%;
 
-  --sidebar-accent: red; /*replace with H S L */
+  --sidebar-accent: 38 55% 90%;
 
-  --sidebar-accent-foreground: red; /*replace with H S L */
+  --sidebar-accent-foreground: 150 25% 15%;
 
-  --sidebar-ring: red; /*replace with H S L */
+  --sidebar-ring: 140 35% 32%;
 
-  --popover: red; /*replace with H S L */
+  --popover: 40 30% 99%;
 
-  --popover-foreground: red; /*replace with H S L */
+  --popover-foreground: 150 25% 15%;
 
-  --popover-border: red; /*replace with H S L */
+  --popover-border: 40 15% 85%;
 
-  --primary: red; /*replace with H S L */
+  --primary: 140 35% 32%;
 
-  --primary-foreground: red; /*replace with H S L */
+  --primary-foreground: 40 30% 97%;
 
-  --secondary: red; /*replace with H S L */
+  --secondary: 25 45% 55%;
 
-  --secondary-foreground: red; /*replace with H S L */
+  --secondary-foreground: 40 30% 97%;
 
-  --muted: red; /*replace with H S L */
+  --muted: 40 20% 92%;
 
-  --muted-foreground: red; /*replace with H S L */
+  --muted-foreground: 150 10% 38%;
 
-  --accent: red; /*replace with H S L */
+  --accent: 38 55% 55%;
 
-  --accent-foreground: red; /*replace with H S L */
+  --accent-foreground: 150 25% 15%;
 
-  --destructive: red; /*replace with H S L */
+  --destructive: 0 65% 48%;
 
-  --destructive-foreground: red; /*replace with H S L */
+  --destructive-foreground: 40 30% 97%;
 
-  --input: red; /*replace with H S L */
-  --ring: red; /*replace with H S L */
-  --chart-1: red; /*replace with H S L */
-  --chart-2: red; /*replace with H S L */
-  --chart-3: red; /*replace with H S L */
-  --chart-4: red; /*replace with H S L */
-  --chart-5: red; /*replace with H S L */
+  --input: 40 15% 85%;
+  --ring: 140 35% 32%;
+  --chart-1: 140 35% 32%;
+  --chart-2: 25 45% 55%;
+  --chart-3: 38 55% 55%;
+  --chart-4: 150 25% 15%;
+  --chart-5: 40 15% 65%;
 
   --app-font-sans: 'Inter', sans-serif;
   --app-font-serif: Georgia, serif;
@@ -213,6 +213,7 @@
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
+/* DARK MODE — Assiduous dark/coral identity, used only on the login screen */
 .dark {
   --button-outline: rgba(255,255,255, .10);
   --badge-outline: rgba(255,255,255, .05);
@@ -223,68 +224,68 @@
   --elevate-1: rgba(255,255,255, .04);
   --elevate-2: rgba(255,255,255, .09);
 
-  --background: red; /*replace with H S L */
+  --background: 222 47% 8%;
 
-  --foreground: red; /*replace with H S L */
+  --foreground: 210 40% 98%;
 
-  --border: red; /*replace with H S L */
+  --border: 222 20% 22%;
 
-  --card: red; /*replace with H S L */
+  --card: 222 40% 12%;
 
-  --card-foreground: red; /*replace with H S L */
+  --card-foreground: 210 40% 98%;
 
-  --card-border: red; /*replace with H S L */
+  --card-border: 222 20% 22%;
 
-  --sidebar: red; /*replace with H S L */
+  --sidebar: 222 40% 10%;
 
-  --sidebar-foreground: red; /*replace with H S L */
+  --sidebar-foreground: 210 40% 98%;
 
-  --sidebar-border: red; /*replace with H S L */
+  --sidebar-border: 222 20% 22%;
 
-  --sidebar-primary: red; /*replace with H S L */
+  --sidebar-primary: 16 90% 60%;
 
-  --sidebar-primary-foreground: red; /*replace with H S L */
+  --sidebar-primary-foreground: 222 47% 8%;
 
-  --sidebar-accent: red; /*replace with H S L */
+  --sidebar-accent: 222 30% 18%;
 
-  --sidebar-accent-foreground: red; /*replace with H S L */
+  --sidebar-accent-foreground: 210 40% 98%;
 
-  --sidebar-ring: red; /*replace with H S L */
+  --sidebar-ring: 16 90% 60%;
 
-  --popover: red; /*replace with H S L */
+  --popover: 222 40% 12%;
 
-  --popover-foreground: red; /*replace with H S L */
+  --popover-foreground: 210 40% 98%;
 
-  --popover-border: red; /*replace with H S L */
+  --popover-border: 222 20% 22%;
 
-  --primary: red; /*replace with H S L */
+  --primary: 16 90% 60%;
 
-  --primary-foreground: red; /*replace with H S L */
+  --primary-foreground: 222 47% 8%;
 
-  --secondary: red; /*replace with H S L */
+  --secondary: 222 30% 20%;
 
-  --secondary-foreground: red; /*replace with H S L */
+  --secondary-foreground: 210 40% 98%;
 
-  --muted: red; /*replace with H S L */
+  --muted: 222 25% 16%;
 
-  --muted-foreground: red; /*replace with H S L */
+  --muted-foreground: 215 20% 65%;
 
-  --accent: red; /*replace with H S L */
+  --accent: 16 90% 60%;
 
-  --accent-foreground: red; /*replace with H S L */
+  --accent-foreground: 222 47% 8%;
 
-  --destructive: red; /*replace with H S L */
+  --destructive: 0 70% 55%;
 
-  --destructive-foreground: red; /*replace with H S L */
+  --destructive-foreground: 210 40% 98%;
 
   /* Used as the border around inputs. Dark mode: Should be a border that is light enough to have high contrast when rendered on a --card background. More contrast than standard --border */
-  --input: red; /*replace with H S L */
-  --ring: red; /*replace with H S L */
-  --chart-1: red; /*replace with H S L */
-  --chart-2: red; /*replace with H S L */
-  --chart-3: red; /*replace with H S L */
-  --chart-4: red; /*replace with H S L */
-  --chart-5: red; /*replace with H S L */
+  --input: 222 20% 24%;
+  --ring: 16 90% 60%;
+  --chart-1: 16 90% 60%;
+  --chart-2: 210 40% 80%;
+  --chart-3: 222 20% 40%;
+  --chart-4: 40 70% 60%;
+  --chart-5: 340 70% 60%;
 
   --shadow-2xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
   --shadow-xs: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);

@@ -1,19 +1,31 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
+import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { LoginPage } from "@/pages/LoginPage";
+import { ReportShell } from "@/pages/ReportShell";
 
 const queryClient = new QueryClient();
+
+function AppShell() {
+  const { authenticated, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div className="theme-senus flex min-h-screen items-center justify-center bg-background">
+        <p className="text-sm text-muted-foreground">Loading…</p>
+      </div>
+    );
+  }
+
+  return authenticated ? <ReportShell /> : <LoginPage />;
+}
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="min-h-screen w-full flex items-center justify-center bg-background text-foreground">
-        <div className="text-center space-y-2">
-          <h1 className="text-2xl font-semibold">Senus PLC Board Report</h1>
-          <p className="text-sm text-muted-foreground">
-            Foundation scaffold ready — pages will be added in a later task.
-          </p>
-        </div>
-      </div>
+      <AuthProvider>
+        <AppShell />
+      </AuthProvider>
       <Toaster />
     </QueryClientProvider>
   );
