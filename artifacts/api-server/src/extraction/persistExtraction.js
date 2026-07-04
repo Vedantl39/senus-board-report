@@ -2,17 +2,27 @@ const { computeDerivedMetrics } = require("../metrics/deriveMetrics");
 const { categoryForMetric } = require("./taxonomy");
 
 /**
- * Fetches the most recently extracted risk disclosures for a given
- * category, so risk status diffing has a "previous" set to compare
- * against. Only the latest extraction per category is used as "previous".
+ * Fetches the risk disclosures from the single most recent PRIOR
+ * extraction batch for a given category, so risk status diffing compares
+ * against one coherent "previous" document rather than a mix of risks
+ * accumulated across many historical documents. A "batch" is identified
+ * by `source_document_id` — all risk rows for a category inserted by the
+ * same document's extraction share that id (NOT `extracted_at`, since
+ * each row within one transaction gets its own `now()` value and can't
+ * be relied on to match exactly).
  */
 async function fetchPreviousRisksByCategory(client, category) {
   const { rows } = await client.query(
-    `SELECT payload->>'title' AS title, payload->>'summary' AS summary
-     FROM disclosures
-     WHERE record_type = 'risk' AND category = $1
-     ORDER BY extracted_at DESC
-     LIMIT 50`,
+    `SELECT d.payload->>'title' AS title, d.payload->>'summary' AS summary
+     FROM disclosures d
+     WHERE d.record_type = 'risk' AND d.category = $1
+       AND d.source_document_id = (
+         SELECT source_document_id
+         FROM disclosures
+         WHERE record_type = 'risk' AND category = $1
+         ORDER BY extracted_at DESC
+         LIMIT 1
+       )`,
     [category],
   );
   return rows;
@@ -26,7 +36,7 @@ function toRawMetricsObject(metrics) {
   return rawMetrics;
 }
 
-async function insertMetricRow(client, { sourceDocumentId, metadata, metricName, value, comparativeValue, comparativePeriod, derived }) {
+async function insertMetricRow(client, { sourceDocumentId, metadata, metricName, value, unit, comparativeValue, comparativePeriod, derived }) {
   await client.query(
     `INSERT INTO disclosures
       (source_document_id, record_type, category, period_label, consolidation_basis, product_line, status, payload)
@@ -39,7 +49,7 @@ async function insertMetricRow(client, { sourceDocumentId, metadata, metricName,
       JSON.stringify({
         metric_name: metricName,
         value,
-        unit: metadata.unit ?? "EUR",
+        unit: unit ?? metadata.unit ?? "EUR",
         comparative_value: comparativeValue ?? null,
         comparative_period: comparativePeriod ?? null,
         derived: Boolean(derived),
@@ -94,6 +104,7 @@ async function persistExtraction(client, { sourceDocumentId, metadata, metrics, 
       metadata,
       metricName: metric.metric_name,
       value: metric.value,
+      unit: metric.unit,
       comparativeValue: metric.comparative_value,
       comparativePeriod: metric.comparative_period,
       derived: false,

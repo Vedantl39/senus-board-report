@@ -20,8 +20,8 @@ test("inserts one raw metric row per extracted metric plus derived rows computed
     sourceDocumentId: "doc-1",
     metadata: { category: "H1", periodLabel: "H1 FY2026", consolidationBasis: "consolidated" },
     metrics: [
-      { metric_name: "revenue", value: 354813, comparative_value: null, comparative_period: null },
-      { metric_name: "gross_profit", value: 289952, comparative_value: null, comparative_period: null },
+      { metric_name: "revenue", value: 354813, unit: "GBP", comparative_value: null, comparative_period: null },
+      { metric_name: "gross_profit", value: 289952, unit: "GBP", comparative_value: null, comparative_period: null },
     ],
     risks: [],
     riskStatuses: [],
@@ -40,6 +40,9 @@ test("inserts one raw metric row per extracted metric plus derived rows computed
   assert.equal(grossMarginRow.derived, true);
   assert.ok(Math.abs(grossMarginRow.value - 0.817) < 0.001);
 
+  const revenueRow = payloads.find((p) => p.metric_name === "revenue");
+  assert.equal(revenueRow.unit, "GBP", "raw metric rows must preserve Claude's extracted unit, not default to EUR");
+
   const nanMetricNames = ["working_capital", "cash_runway_months"];
   for (const name of nanMetricNames) {
     assert.ok(
@@ -47,6 +50,26 @@ test("inserts one raw metric row per extracted metric plus derived rows computed
       `${name} should be skipped rather than stored as NaN/null`,
     );
   }
+});
+
+test("defaults raw metric unit to EUR only when Claude does not supply one", async () => {
+  const client = fakeClient();
+
+  await persistExtraction(client, {
+    sourceDocumentId: "doc-1",
+    metadata: { periodLabel: "H1 FY2026" },
+    metrics: [
+      { metric_name: "revenue", value: 100, comparative_value: null, comparative_period: null },
+    ],
+    risks: [],
+    riskStatuses: [],
+    events: [],
+    periodMonths: 6,
+  });
+
+  const metricInserts = client.calls.filter((c) => c.sql.includes("record_type, category, period_label, consolidation_basis"));
+  const revenueRow = JSON.parse(metricInserts[0].params[4]);
+  assert.equal(revenueRow.unit, "EUR");
 });
 
 test("does not attempt derived-metric computation when there are no raw metrics", async () => {
