@@ -1,10 +1,10 @@
-import express, { type Express } from "express";
-import cors from "cors";
-import pinoHttp from "pino-http";
-import router from "./routes";
-import { logger } from "./lib/logger";
+const express = require("express");
+const cors = require("cors");
+const pinoHttp = require("pino-http");
+const router = require("./routes");
+const { logger } = require("./lib/logger");
 
-const app: Express = express();
+const app = express();
 
 app.use(
   pinoHttp({
@@ -31,4 +31,4 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/api", router);
 
-export default app;
+module.exports = app;

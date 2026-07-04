@@ -1,5 +1,5 @@
-import app from "./app";
-import { logger } from "./lib/logger";
+const app = require("./app");
+const { logger } = require("./lib/logger");
 
 const rawPort = process.env["PORT"];
 

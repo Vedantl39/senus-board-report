@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Senus PLC Board Report"
+version = "1.0.0"
+id = "artifacts/board-report"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18184
+
+[services.development]
+run = "pnpm --filter @workspace/board-report run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/board-report", "run", "build" ]
+publicDir = "artifacts/board-report/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18184"
+BASE_PATH = "/"

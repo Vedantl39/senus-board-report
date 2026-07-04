@@ -1,0 +1,1 @@
+- [Plain-JS artifact conventions](plain-js-artifact-conventions.md) — how to run a no-TS backend/frontend inside this TS-first pnpm workspace template.
