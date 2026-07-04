@@ -34,7 +34,7 @@ AI-native board reporting platform for Senus PLC (a natural capital software com
 - `artifacts/board-report/src/pages/ReportShell.jsx` + `src/pages/views/*View.jsx` — persistent audience switcher (Management/Board/Investors/Lenders) driving `useAudienceView` (`src/hooks/useAudienceView.js`), which fetches the matching `/api/views/{audience}` endpoint.
 - `artifacts/board-report/src/components/RiskRegister.jsx` — groups risks by category, ordered by `materiality_rank`, with `StatusPill` badges (red/amber/gray for New/Updated/Unchanged).
 - `artifacts/board-report/src/components/badges/` — `UnauditedBadge`, `ConsolidationBadge` (Consolidated/Standalone), `StatusPill`, reused across `MetricsTable`/`RiskRegister`/`EventList`.
-- `artifacts/board-report/src/index.css` — two theme identities: `:root` (Senus earth-tone, post-login report UI) and `.dark` (Assiduous dark/coral, login screen only), applied via `theme-senus`/`theme-assiduous dark` wrapper classes in `App.jsx`.
+- `artifacts/board-report/src/index.css` — three theme layers: `:root` (base tokens), `.theme-senus` (Safestack-inspired purple/coral/orange identity — purple primary, coral secondary, orange accent, Lato body + Work Sans headings via `--app-font-heading`/`font-heading` — layered on top of `:root` for the post-login report UI only), and `.dark` (Assiduous dark/coral, login screen only, untouched by the report redesign since it never carries `.theme-senus`). Wrapper classes applied in `App.jsx`.
 
 ## Architecture decisions
 

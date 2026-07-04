@@ -21,7 +21,7 @@ export function TopNav({ audience, onAudienceChange }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-8">
           <div>
-            <p className="text-lg font-semibold tracking-tight text-foreground">
+            <p className="font-heading text-lg font-bold tracking-tight text-primary">
               Senus PLC
             </p>
             <p className="text-xs text-muted-foreground">Board Report</p>
@@ -32,9 +32,9 @@ export function TopNav({ audience, onAudienceChange }) {
                 key={item.key}
                 aria-current={item.key === "report" ? "page" : undefined}
                 title={item.key === "report" ? undefined : "Coming soon"}
-                className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+                className={`rounded-full px-3 py-1.5 text-sm font-semibold transition-colors ${
                   item.key === "report"
-                    ? "bg-primary text-primary-foreground"
+                    ? "bg-accent text-accent-foreground"
                     : "cursor-default text-muted-foreground/60"
                 }`}
               >
@@ -46,21 +46,21 @@ export function TopNav({ audience, onAudienceChange }) {
         <button
           type="button"
           onClick={logout}
-          className="text-sm font-medium text-muted-foreground hover:text-foreground"
+          className="rounded-full px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
         >
           Sign out
         </button>
       </div>
-      <div className="mx-auto flex max-w-6xl items-center gap-1 px-6 pb-3">
+      <div className="mx-auto flex max-w-6xl items-center gap-2 px-6 pb-3">
         {AUDIENCES.map((item) => (
           <button
             key={item.key}
             type="button"
             onClick={() => onAudienceChange(item.key)}
-            className={`rounded-full border px-3 py-1 text-sm font-medium transition-colors ${
+            className={`rounded-full border px-3.5 py-1 text-sm font-semibold transition-colors ${
               audience === item.key
-                ? "border-primary bg-primary/10 text-primary"
-                : "border-border text-muted-foreground hover:text-foreground"
+                ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
             }`}
           >
             {item.label}

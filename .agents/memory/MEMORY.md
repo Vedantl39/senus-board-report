@@ -3,3 +3,4 @@
 - [pnpm workspace subpackage installs](pnpm-workspace-package-installs.md) — `installLanguagePackages` with `cwd` can still target the workspace root; verify and fall back to manual `package.json` edit + `pnpm install --filter`.
 - [Express sessions behind Replit's proxy](express-session-behind-proxy.md) — secure cookies need `app.set("trust proxy", 1)` or they silently never get set in production.
 - [Audience view category matching](audience-view-category-matching.md) — audience filters match category strings exact/verbatim (e.g. "Growth & Revenue"), not slugified; mismatches fail silently as empty views.
+- [Theme marker class layering](theme-marker-class-layering.md) — scope a brand redesign to one app section via a new CSS-var override class, without touching `:root` or other sections' theme classes.
