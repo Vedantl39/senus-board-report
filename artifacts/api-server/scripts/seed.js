@@ -74,6 +74,15 @@ async function insertRisk(client, { sourceDocumentId, category, title, summary, 
   );
 }
 
+async function insertEvent(client, { sourceDocumentId, category, title, description, periodLabel, extractedAt }) {
+  await client.query(
+    `INSERT INTO disclosures
+      (source_document_id, record_type, category, period_label, payload, extracted_at)
+     VALUES ($1, 'event', $2, $3, $4, $5)`,
+    [sourceDocumentId, category, periodLabel, JSON.stringify({ title, description }), extractedAt],
+  );
+}
+
 async function main() {
   const client = await pool.connect();
   try {
@@ -142,12 +151,20 @@ async function main() {
       cash_and_equivalents: 735189,
       depreciation_amortization: 10014,
     };
+    // Comparative for every H1 FY2026 metric must be the matching H1 FY2025
+    // (half-year) figure, never the full FY2025 annual figure — comparing 6
+    // months against 12 months produces a misleading direction/magnitude.
+    // Only revenue has a hand-verified true H1 FY2025 comparative (340,931).
+    // gross_profit / operating_profit_loss have no disclosed H1 FY2025
+    // figure, so their comparative is left null (renders as "—") rather
+    // than substituting the wrongly-scoped annual figure.
+    const h1Fy2025Revenue = 340931;
     await insertMetric(client, {
       sourceDocumentId: H1_FY2026_DOC_ID,
       metricName: "revenue",
       value: h1Raw.revenue,
-      comparativeValue: fy25Raw.revenue,
-      comparativePeriod: "FY2025",
+      comparativeValue: h1Fy2025Revenue,
+      comparativePeriod: "H1 FY2025",
       periodLabel: "H1 FY2026",
       consolidationBasis: "consolidated",
     });
@@ -155,8 +172,8 @@ async function main() {
       sourceDocumentId: H1_FY2026_DOC_ID,
       metricName: "gross_profit",
       value: h1Raw.gross_profit,
-      comparativeValue: fy25Raw.gross_profit,
-      comparativePeriod: "FY2025",
+      comparativeValue: null,
+      comparativePeriod: null,
       periodLabel: "H1 FY2026",
       consolidationBasis: "consolidated",
     });
@@ -164,8 +181,8 @@ async function main() {
       sourceDocumentId: H1_FY2026_DOC_ID,
       metricName: "operating_profit_loss",
       value: h1Raw.operating_profit_loss,
-      comparativeValue: fy25Raw.operating_profit_loss,
-      comparativePeriod: "FY2025",
+      comparativeValue: null,
+      comparativePeriod: null,
       periodLabel: "H1 FY2026",
       consolidationBasis: "consolidated",
     });
@@ -212,12 +229,82 @@ async function main() {
       derived: true,
     });
 
+    // share_option_pool_percentage: the one real disclosed Returns/Market
+    // figure available so far (~5%, per the user). admission_price,
+    // share_price_close, and net_assets_liabilities are NOT seeded here —
+    // no real disclosed values for them have been provided yet, so the
+    // Investors/Lenders views intentionally show "Not available" for those
+    // rather than a fabricated number.
+    await insertMetric(client, {
+      sourceDocumentId: H1_FY2026_DOC_ID,
+      metricName: "share_option_pool_percentage",
+      value: 0.05,
+      unit: "ratio",
+      periodLabel: "H1 FY2026",
+      consolidationBasis: "consolidated",
+    });
+
     // --- Risks (materiality-ordered, per category) ---
+    // Real disclosed risk categories/items from the Information Document,
+    // per attached_assets/replit-accuracy-fixes-prompt_1783249854817.md
+    // Priority 3 — replacing the earlier generic placeholder risks. All
+    // "Unchanged" since this is the baseline document with nothing yet to
+    // compare against.
     const risks = [
-      { category: "market_risk", title: "Customer concentration", summary: "A small number of enterprise customers account for a large share of revenue.", status: "New" },
-      { category: "market_risk", title: "Regulatory change risk", summary: "New environmental disclosure regulation may increase compliance costs.", status: "Updated" },
-      { category: "operational_risk", title: "Key person dependency", summary: "Founder-led sales relationships remain concentrated in a small team.", status: "Unchanged" },
-      { category: "financial_risk", title: "Continued operating losses", summary: "The group remains loss-making at the operating level in both FY2025 and H1 FY2026.", status: "Updated" },
+      {
+        category: "Corporate",
+        title: "Execution risk on Senus 2030 growth strategy",
+        summary: "The group's ability to deliver its Senus 2030 growth strategy depends on successful execution across product, sales, and operations.",
+        status: "Unchanged",
+      },
+      {
+        category: "Technology and IP",
+        title: "Cyber security threats to customer data",
+        summary: "The group holds sensitive customer data; a security breach could damage customer trust and expose the group to liability.",
+        status: "Unchanged",
+      },
+      {
+        category: "Technology and IP",
+        title: "Software and IP infringement exposure",
+        summary: "The group's software and IP could be subject to infringement claims, or third parties could infringe the group's own IP.",
+        status: "Unchanged",
+      },
+      {
+        category: "People and Operations",
+        title: "Dependence on key personnel",
+        summary: "The group's performance depends on retaining a small number of key personnel with specialist knowledge and relationships.",
+        status: "Unchanged",
+      },
+      {
+        category: "People and Operations",
+        title: "Reliance on third-party service providers",
+        summary: "The group relies on third-party service providers for critical operational functions; disruption to these relationships could affect delivery.",
+        status: "Unchanged",
+      },
+      {
+        category: "International and Regulatory",
+        title: "Divergent data protection laws across markets",
+        summary: "Operating across multiple jurisdictions exposes the group to divergent and evolving data protection regimes.",
+        status: "Unchanged",
+      },
+      {
+        category: "International and Regulatory",
+        title: "Exposure to international economic and political risk",
+        summary: "The group's international operations are exposed to economic and political conditions outside its control.",
+        status: "Unchanged",
+      },
+      {
+        category: "Financial and Shares",
+        title: "Company is not yet profitable",
+        summary: "The group has a history of losses and there is no guarantee it will achieve or sustain profitability.",
+        status: "Unchanged",
+      },
+      {
+        category: "Financial and Shares",
+        title: "Limited share liquidity on Euronext Access",
+        summary: "The group's shares trade on Euronext Access, which has historically lower liquidity than a main market, and shareholders may find it difficult to trade in size.",
+        status: "Unchanged",
+      },
     ];
     const materialityByCategory = {};
     for (const risk of risks) {
@@ -232,6 +319,17 @@ async function main() {
         status: risk.status,
       });
     }
+
+    // --- Governance events ---
+    await insertEvent(client, {
+      sourceDocumentId: H1_FY2026_DOC_ID,
+      category: "Governance",
+      title: "Leadership Transition",
+      description:
+        "Brendan Allen moved from Chief Executive Officer to Vice Chairman, effective 24 June 2026.",
+      periodLabel: "H1 FY2026",
+      extractedAt: "2026-06-24T00:00:00Z",
+    });
 
     await client.query("COMMIT");
     console.log("Seed complete.");

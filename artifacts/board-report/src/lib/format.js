@@ -1,8 +1,16 @@
+const ACRONYM_OVERRIDES = {
+  ebitda: "EBITDA",
+};
+
 export function humanize(key) {
   if (!key) return "";
   return key
     .split("_")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => {
+      const override = ACRONYM_OVERRIDES[word.toLowerCase()];
+      if (override) return override;
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
     .join(" ");
 }
 

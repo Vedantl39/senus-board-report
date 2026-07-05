@@ -19,8 +19,8 @@ test("investors view scopes to Returns/Market plus disclosed revenue growth", ()
 
 test("lenders view scopes to Cash & Liquidity plus balance-sheet solvency", () => {
   const { categories, metricNames } = AUDIENCE_VIEWS.lenders;
-  assert.deepEqual(categories, ["Cash & Liquidity"]);
-  assert.deepEqual(metricNames, ["net_assets_liabilities"]);
+  assert.deepEqual(categories, ["Cash & Liquidity", "Solvency/Balance Sheet"]);
+  assert.ok(metricNames.includes("net_assets_liabilities"));
 });
 
 test("board view's metrics slice scopes to Profitability plus cash position", () => {

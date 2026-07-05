@@ -15,12 +15,15 @@
  *   forbids fabricating metrics Senus doesn't disclose), so "growth" is
  *   represented by the actual disclosed `revenue` metric. ROCE, share
  *   price, and dilution (share_option_pool_percentage) all fall under
- *   the "Returns/Market" taxonomy category.
+ *   the "Returns/Market" taxonomy category. Investors also see the risk
+ *   categories most relevant to them (Market and Competition, Financial
+ *   and Shares) via `riskCategories`.
  * - lenders: "cash/liquidity, working capital, going-concern-relevant
  *   items." Cash/liquidity and working capital (derived) both live in
- *   the "Cash & Liquidity" category. Going-concern relevance is covered
- *   by net_assets_liabilities (Solvency/Balance Sheet) since that's the
- *   disclosed balance-sheet solvency figure.
+ *   the "Cash & Liquidity" category; the full "Solvency/Balance Sheet"
+ *   category (net_assets_liabilities and other balance-sheet items) is
+ *   also in scope for going-concern relevance. Lenders see the
+ *   Financial and Shares risk category via `riskCategories`.
  *
  * The "board" view mixes multiple record_types (metrics + risks +
  * events), so it's assembled directly in the views route rather than
@@ -37,11 +40,13 @@ const AUDIENCE_VIEWS = {
     recordType: "metric",
     categories: ["Returns/Market"],
     metricNames: ["revenue"],
+    riskCategories: ["Market and Competition", "Financial and Shares"],
   },
   lenders: {
     recordType: "metric",
-    categories: ["Cash & Liquidity"],
+    categories: ["Cash & Liquidity", "Solvency/Balance Sheet"],
     metricNames: ["net_assets_liabilities"],
+    riskCategories: ["Financial and Shares"],
   },
 };
 

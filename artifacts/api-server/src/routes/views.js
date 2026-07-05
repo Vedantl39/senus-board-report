@@ -10,8 +10,21 @@ function simpleAudienceHandler(audience) {
 
   return async (req, res, next) => {
     try {
-      const rows = await queryDisclosures(pool, filters);
-      res.json({ metrics: rows });
+      const hasRiskCategories =
+        Array.isArray(filters.riskCategories) && filters.riskCategories.length > 0;
+
+      const [metrics, risks] = await Promise.all([
+        queryDisclosures(pool, filters),
+        hasRiskCategories
+          ? queryDisclosures(pool, {
+              recordType: "risk",
+              categories: filters.riskCategories,
+              orderBy: "d.category ASC, d.materiality_rank ASC NULLS LAST",
+            })
+          : Promise.resolve([]),
+      ]);
+
+      res.json({ metrics, risks });
     } catch (err) {
       next(err);
     }

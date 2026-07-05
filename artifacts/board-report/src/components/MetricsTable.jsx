@@ -2,7 +2,7 @@ import { UnauditedBadge } from "@/components/badges/UnauditedBadge";
 import { ConsolidationBadge } from "@/components/badges/ConsolidationBadge";
 import { EmptyState } from "@/components/EmptyState";
 import { Tooltip } from "@/components/Tooltip";
-import { humanize, formatCurrency, groupBy } from "@/lib/format";
+import { humanize, formatCurrency, formatPercent, groupBy } from "@/lib/format";
 
 export function MetricsTable({ metrics }) {
   if (!metrics || metrics.length === 0) {
@@ -51,14 +51,18 @@ export function MetricsTable({ metrics }) {
                         {row.period_label ?? "—"}
                       </td>
                       <td className="px-3 py-2 text-foreground">
-                        {formatCurrency(payload.value, payload.unit)}
+                        {payload.unit === "ratio"
+                          ? formatPercent(payload.value)
+                          : formatCurrency(payload.value, payload.unit)}
                       </td>
                       <td className="px-3 py-2 text-muted-foreground">
                         {payload.comparative_value !== undefined &&
                         payload.comparative_value !== null
-                          ? `${formatCurrency(payload.comparative_value, payload.unit)} (${
-                              payload.comparative_period ?? "prior period"
-                            })`
+                          ? `${
+                              payload.unit === "ratio"
+                                ? formatPercent(payload.comparative_value)
+                                : formatCurrency(payload.comparative_value, payload.unit)
+                            } (${payload.comparative_period ?? "prior period"})`
                           : "—"}
                       </td>
                       <td className="px-3 py-2">
