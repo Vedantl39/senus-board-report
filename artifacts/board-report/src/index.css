@@ -214,52 +214,54 @@
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
-/* REPORT THEME OVERRIDE — Safestack-inspired identity, used post-login only.
-   Layered on top of :root for elements inside .theme-senus; the login screen
-   (.theme-assiduous.dark) is untouched since it never carries this class. */
+/* REPORT THEME OVERRIDE — Senus PLC identity (dark green / teal / cream),
+   measured from senus.com, used post-login only. Layered on top of :root
+   for elements inside .theme-senus; the login screen (.theme-assiduous.dark)
+   keeps the separate Assiduous dark/coral identity untouched since it
+   never carries this class. */
 .theme-senus {
-  --background: 0 0% 96%;
-  --foreground: 0 0% 25%;
+  --background: 41 49% 90%;
+  --foreground: 0 0% 10%;
 
-  --border: 0 0% 87%;
+  --border: 41 20% 78%;
 
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 25%;
-  --card-border: 0 0% 87%;
+  --card-foreground: 0 0% 10%;
+  --card-border: 41 20% 78%;
 
-  --sidebar: 0 0% 98%;
-  --sidebar-foreground: 0 0% 25%;
-  --sidebar-border: 0 0% 87%;
-  --sidebar-primary: 275 78% 31%;
-  --sidebar-primary-foreground: 0 0% 98%;
-  --sidebar-accent: 40 100% 94%;
-  --sidebar-accent-foreground: 0 0% 25%;
-  --sidebar-ring: 275 78% 31%;
+  --sidebar: 161 93% 11%;
+  --sidebar-foreground: 0 0% 100%;
+  --sidebar-border: 161 60% 8%;
+  --sidebar-primary: 161 93% 11%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 175 62% 33%;
+  --sidebar-accent-foreground: 0 0% 100%;
+  --sidebar-ring: 175 62% 33%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 25%;
-  --popover-border: 0 0% 87%;
+  --popover-foreground: 0 0% 10%;
+  --popover-border: 41 20% 78%;
 
-  --primary: 275 78% 31%;
-  --primary-foreground: 0 0% 98%;
+  --primary: 161 93% 11%;
+  --primary-foreground: 0 0% 100%;
 
-  --secondary: 0 83% 70%;
+  --secondary: 175 62% 33%;
   --secondary-foreground: 0 0% 100%;
 
-  --muted: 0 0% 92%;
-  --muted-foreground: 0 0% 45%;
+  --muted: 41 30% 85%;
+  --muted-foreground: 0 0% 35%;
 
-  --accent: 40 100% 53%;
-  --accent-foreground: 0 0% 20%;
+  --accent: 175 62% 33%;
+  --accent-foreground: 0 0% 100%;
 
   --destructive: 0 70% 50%;
   --destructive-foreground: 0 0% 98%;
 
-  --input: 0 0% 87%;
-  --ring: 275 78% 31%;
-  --chart-1: 275 78% 31%;
-  --chart-2: 40 100% 53%;
-  --chart-3: 0 83% 70%;
+  --input: 41 20% 78%;
+  --ring: 175 62% 33%;
+  --chart-1: 161 93% 11%;
+  --chart-2: 175 62% 33%;
+  --chart-3: 41 49% 60%;
   --chart-4: 0 0% 25%;
   --chart-5: 0 0% 65%;
 
