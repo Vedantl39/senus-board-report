@@ -1,10 +1,17 @@
 import { UnauditedBadge } from "@/components/badges/UnauditedBadge";
 import { ConsolidationBadge } from "@/components/badges/ConsolidationBadge";
+import { EmptyState } from "@/components/EmptyState";
+import { Tooltip } from "@/components/Tooltip";
 import { humanize, formatCurrency, groupBy } from "@/lib/format";
 
 export function MetricsTable({ metrics }) {
   if (!metrics || metrics.length === 0) {
-    return <p className="text-sm text-muted-foreground">No metrics disclosed for this view.</p>;
+    return (
+      <EmptyState
+        title="No metrics disclosed for this view"
+        description="Once a source document is extracted for this audience's categories, the figures will appear here automatically."
+      />
+    );
   }
 
   const byCategory = groupBy(metrics, (m) => m.category ?? "Other");
@@ -55,18 +62,28 @@ export function MetricsTable({ metrics }) {
                           : "—"}
                       </td>
                       <td className="px-3 py-2">
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          {row.source_audited === false ? <UnauditedBadge /> : null}
-                          <ConsolidationBadge basis={row.consolidation_basis} />
-                          {row.source_filename ? (
-                            <span
-                              className="truncate text-[11px] text-muted-foreground"
-                              title={row.source_filename}
-                            >
-                              {row.source_filename}
-                            </span>
-                          ) : null}
-                        </div>
+                        <Tooltip
+                          content={
+                            <div className="space-y-0.5">
+                              <p className="font-semibold">
+                                {row.source_filename ?? "Unknown source"}
+                              </p>
+                              <p className="text-muted-foreground">
+                                {row.source_audited === false ? "Unaudited" : "Audited"}
+                              </p>
+                            </div>
+                          }
+                        >
+                          <div className="flex cursor-help flex-wrap items-center gap-1.5">
+                            {row.source_audited === false ? <UnauditedBadge /> : null}
+                            <ConsolidationBadge basis={row.consolidation_basis} />
+                            {row.source_filename ? (
+                              <span className="truncate text-[11px] text-muted-foreground">
+                                {row.source_filename}
+                              </span>
+                            ) : null}
+                          </div>
+                        </Tooltip>
                       </td>
                     </tr>
                   );

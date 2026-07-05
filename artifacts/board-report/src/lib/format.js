@@ -15,6 +15,11 @@ export function formatCurrency(value, unit) {
   return `${symbol}${formatted}`;
 }
 
+export function formatPercent(value) {
+  if (value === null || value === undefined || Number.isNaN(value)) return "—";
+  return `${(value * 100).toFixed(1)}%`;
+}
+
 export function groupBy(items, keyFn) {
   const groups = new Map();
   for (const item of items) {
