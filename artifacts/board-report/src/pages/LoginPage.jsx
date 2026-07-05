@@ -20,8 +20,8 @@ export function LoginPage() {
         <div className="mb-6 text-center">
           <img
             src={assiduousLogo}
-            alt="Assiduous — Making Companies Financeable"
-            className="mx-auto h-auto max-h-24 w-full max-w-[380px] object-contain"
+            alt="Assiduous"
+            className="mx-auto h-auto max-h-16 w-full max-w-[340px] object-contain"
           />
           <h1 className="mt-2 text-2xl font-semibold text-foreground">
             Board Report Access

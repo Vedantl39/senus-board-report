@@ -5,3 +5,4 @@
 - [Audience view category matching](audience-view-category-matching.md) — audience filters match category strings exact/verbatim (e.g. "Growth & Revenue"), not slugified; mismatches fail silently as empty views.
 - [Theme marker class layering](theme-marker-class-layering.md) — scope a brand redesign to one app section via a new CSS-var override class, without touching `:root` or other sections' theme classes.
 - [Seed data limits on derived metrics](seed-data-limits-on-derived-metrics.md) — only back-solve a derived metric from real disclosed figures; if raw inputs weren't disclosed, show "Not available" instead of fabricating them.
+- [Logo asset cropping](logo-asset-cropping.md) — crop baked-in logo padding/taglines at the source image with ImageMagick; CSS margins/max-height can't remove pixels that are part of the raster.
