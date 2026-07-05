@@ -230,16 +230,87 @@ async function main() {
     });
 
     // share_option_pool_percentage: the one real disclosed Returns/Market
-    // figure available so far (~5%, per the user). admission_price,
-    // share_price_close, and net_assets_liabilities are NOT seeded here —
-    // no real disclosed values for them have been provided yet, so the
-    // Investors/Lenders views intentionally show "Not available" for those
-    // rather than a fabricated number.
+    // figure available so far (~5%, per the user).
     await insertMetric(client, {
       sourceDocumentId: H1_FY2026_DOC_ID,
       metricName: "share_option_pool_percentage",
       value: 0.05,
       unit: "ratio",
+      periodLabel: "H1 FY2026",
+      consolidationBasis: "consolidated",
+    });
+
+    // admission_price: fixed IPO/admission price, not period-scoped in the
+    // same sense as a trading price — attached to H1 FY2026 (the period the
+    // report currently covers) since that's the only doc it's associated
+    // with; no comparative (it doesn't move).
+    await insertMetric(client, {
+      sourceDocumentId: H1_FY2026_DOC_ID,
+      metricName: "admission_price",
+      value: 5.126,
+      periodLabel: "H1 FY2026",
+      consolidationBasis: "consolidated",
+    });
+
+    // share_price_close: latest close (3 July 2026) per
+    // SENUS_Historical_price.xlsx / IE000O0F49R3XACD_Performance.xlsx.
+    // comparative_value is the admission price so the KPI card's trend
+    // arrow reflects the disclosed +19.98% YTD change against admission,
+    // not a fabricated prior-period close (OHLC/volume are genuinely
+    // "-"/0 on Euronext Access on many days — real illiquidity, not a
+    // data gap).
+    await insertMetric(client, {
+      sourceDocumentId: H1_FY2026_DOC_ID,
+      metricName: "share_price_close",
+      value: 6.15,
+      comparativeValue: 5.126,
+      comparativePeriod: "Admission",
+      periodLabel: "H1 FY2026",
+      consolidationBasis: "consolidated",
+    });
+
+    // net_assets_liabilities: real figures for both periods, but NOT
+    // directly comparable (standalone vs consolidated; the swing is driven
+    // by the Loamin acquisition + a EUR1.1m share issuance, not organic
+    // performance) — per the user, seeded as two independent period rows
+    // (same treatment as revenue) rather than wired as comparative_value
+    // of one another, so the UI shows them side-by-side with their
+    // consolidation-basis badges instead of a misleading % change.
+    await insertMetric(client, {
+      sourceDocumentId: FY2025_DOC_ID,
+      metricName: "net_assets_liabilities",
+      value: -15575,
+      periodLabel: "FY2025",
+      consolidationBasis: "standalone",
+    });
+    await insertMetric(client, {
+      sourceDocumentId: H1_FY2026_DOC_ID,
+      metricName: "net_assets_liabilities",
+      value: 561081,
+      periodLabel: "H1 FY2026",
+      consolidationBasis: "consolidated",
+    });
+    // Supporting components (H1 FY2026), disclosed alongside the net
+    // assets figure: share capital + share premium + retained earnings
+    // = 25000 + 300000 + 236081 = 561081.
+    await insertMetric(client, {
+      sourceDocumentId: H1_FY2026_DOC_ID,
+      metricName: "called_up_share_capital",
+      value: 25000,
+      periodLabel: "H1 FY2026",
+      consolidationBasis: "consolidated",
+    });
+    await insertMetric(client, {
+      sourceDocumentId: H1_FY2026_DOC_ID,
+      metricName: "share_premium",
+      value: 300000,
+      periodLabel: "H1 FY2026",
+      consolidationBasis: "consolidated",
+    });
+    await insertMetric(client, {
+      sourceDocumentId: H1_FY2026_DOC_ID,
+      metricName: "retained_earnings",
+      value: 236081,
       periodLabel: "H1 FY2026",
       consolidationBasis: "consolidated",
     });
@@ -303,6 +374,12 @@ async function main() {
         category: "Financial and Shares",
         title: "Limited share liquidity on Euronext Access",
         summary: "The group's shares trade on Euronext Access, which has historically lower liquidity than a main market, and shareholders may find it difficult to trade in size.",
+        status: "Unchanged",
+      },
+      {
+        category: "Market and Competition",
+        title: "Competitive intensity in a fast-evolving market",
+        summary: "Some competitors have greater financial, technical, and marketing resources, longer operating histories, and larger customer bases; the Natural Capital solutions market is evolving quickly, which could affect Senus's ability to maintain or grow market share.",
         status: "Unchanged",
       },
     ];

@@ -6,3 +6,5 @@
 - [Theme marker class layering](theme-marker-class-layering.md) — scope a brand redesign to one app section via a new CSS-var override class, without touching `:root` or other sections' theme classes.
 - [Seed data limits on derived metrics](seed-data-limits-on-derived-metrics.md) — only back-solve a derived metric from real disclosed figures; if raw inputs weren't disclosed, show "Not available" instead of fabricating them.
 - [Logo asset cropping](logo-asset-cropping.md) — crop baked-in logo padding/taglines at the source image with ImageMagick; CSS margins/max-height can't remove pixels that are part of the raster.
+- [Screenshotting behind session auth](screenshotting-behind-session-auth.md) — temporarily bypass auth gate + session endpoint + SPA default tab state to screenshot protected views without the real password.
+- [Audience-view OR-query test coupling](audience-view-or-query-coupling.md) — a generic test expects every AUDIENCE_VIEWS entry to OR categories with metricNames; keep metricNames non-empty even when categories alone suffice.
