@@ -38,19 +38,25 @@ function pdfText(filename) {
 
 const DOCUMENTS = [
   {
+    // FY2025 is consolidated (Senus PLC + its UK subsidiary, incorporated
+    // 2023) but predates the Loamin acquisition (Nov 2025) — a binary
+    // "standalone" label would be wrong (it was never standalone) and a
+    // plain "consolidated" label would be incomplete (doesn't say what's
+    // included), so the scope is spelled out explicitly. See replit.md.
     filename: "Senus_PLC_Information_Document_December_2025_1783253990763.pdf",
     docType: "information_document",
     periodLabel: "FY2025",
-    consolidationBasis: "consolidated",
+    consolidationBasis: "Consolidated (excl. Loamin)",
     audited: true,
     hasRiskSection: true,
     isPressRelease: false,
   },
   {
+    // H1 FY2026 is consolidated including Loamin, acquired November 2025.
     filename: "Senus_HalfYearResultsDec2025_PR_V19032026_FINAL_clean_(2)_1783253990759.pdf",
     docType: "interim_results",
     periodLabel: "H1 FY2026",
-    consolidationBasis: "consolidated",
+    consolidationBasis: "Consolidated (incl. Loamin, acquired Nov 2025)",
     audited: false,
     hasRiskSection: false,
     isPressRelease: true,
