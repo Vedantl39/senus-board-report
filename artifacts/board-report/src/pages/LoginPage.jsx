@@ -23,7 +23,7 @@ export function LoginPage() {
             alt="Assiduous"
             className="mx-auto h-auto max-h-16 w-full max-w-[340px] object-contain"
           />
-          <h1 className="mt-2 text-2xl font-semibold text-foreground">
+          <h1 className="mt-4 text-2xl font-semibold text-foreground">
             Board Report Access
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
