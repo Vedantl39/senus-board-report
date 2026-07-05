@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import assiduousLogo from "@assets/image_1783248994678.png";
 
 export function LoginPage() {
   const { login, error } = useAuth();
@@ -17,10 +18,12 @@ export function LoginPage() {
     <div className="theme-assiduous dark flex min-h-screen items-center justify-center bg-background px-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-            Assiduous
-          </p>
-          <h1 className="mt-2 text-2xl font-semibold text-foreground">
+          <img
+            src={assiduousLogo}
+            alt="Assiduous — Making Companies Financeable"
+            className="mx-auto h-auto max-h-24 w-full max-w-[280px] object-contain"
+          />
+          <h1 className="mt-4 text-2xl font-semibold text-foreground">
             Board Report Access
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
