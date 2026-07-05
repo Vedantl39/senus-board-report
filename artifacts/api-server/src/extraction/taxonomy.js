@@ -79,6 +79,31 @@ const ALL_RAW_METRIC_NAMES = new Set(
   Object.values(RAW_METRIC_TAXONOMY).flat(),
 );
 
+/**
+ * Raw metrics that are inherently percentages/ratios rather than currency
+ * amounts. Extraction must express these as a decimal (5% -> 0.05, not the
+ * literal document figure 5), unit "ratio" — the same convention derived
+ * ratios (gross_margin, ebitda_margin, etc.) already use.
+ */
+const RATIO_RAW_METRIC_NAMES = new Set(["share_option_pool_percentage"]);
+
+/**
+ * Fixed risk-category taxonomy — the ONLY category values extracted risks
+ * may use. `src/config/audienceViews.js` filters the risk register by
+ * these exact strings (e.g. `riskCategories: ["Financial and Shares"]`),
+ * so extraction must map a document's own section headers (which vary
+ * document to document, e.g. "CUSTOMER", "PRODUCT") into this fixed set
+ * rather than passing them through verbatim.
+ */
+const RISK_CATEGORIES = [
+  "Corporate",
+  "Technology and IP",
+  "People and Operations",
+  "International and Regulatory",
+  "Financial and Shares",
+  "Market and Competition",
+];
+
 function isRecognizedRawMetric(metricName) {
   return ALL_RAW_METRIC_NAMES.has(metricName);
 }
@@ -120,6 +145,8 @@ module.exports = {
   RAW_METRIC_TAXONOMY,
   DERIVED_METRIC_NAMES,
   ALL_RAW_METRIC_NAMES,
+  RATIO_RAW_METRIC_NAMES,
+  RISK_CATEGORIES,
   isRecognizedRawMetric,
   categoryForMetric,
 };
