@@ -4,6 +4,7 @@ const authRouter = require("./auth");
 const disclosuresRouter = require("./disclosures");
 const viewsRouter = require("./views");
 const risksRouter = require("./risks");
+const commentaryRouter = require("./commentary");
 const { requireAuth } = require("../middlewares/requireAuth");
 
 const router = Router();
@@ -18,5 +19,6 @@ router.use(requireAuth);
 router.use(disclosuresRouter);
 router.use(viewsRouter);
 router.use(risksRouter);
+router.use(commentaryRouter);
 
 module.exports = router;

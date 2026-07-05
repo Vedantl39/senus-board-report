@@ -14,7 +14,7 @@ const AUDIENCES = [
   { key: "lenders", label: "Lenders" },
 ];
 
-export function TopNav({ audience, onAudienceChange }) {
+export function TopNav({ audience, onAudienceChange, framing, onFramingChange }) {
   const { logout } = useAuth();
 
   return (
@@ -33,18 +33,19 @@ export function TopNav({ audience, onAudienceChange }) {
           </div>
           <nav className="flex items-center gap-1">
             {FRAMING.map((item) => (
-              <span
+              <button
                 key={item.key}
-                aria-current={item.key === "report" ? "page" : undefined}
-                title={item.key === "report" ? undefined : "Coming soon"}
+                type="button"
+                aria-current={item.key === framing ? "page" : undefined}
+                onClick={() => onFramingChange(item.key)}
                 className={`rounded-full px-3 py-1.5 text-sm font-semibold transition-colors ${
-                  item.key === "report"
+                  item.key === framing
                     ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                    : "cursor-default text-sidebar-foreground/40"
+                    : "text-sidebar-foreground/60 hover:bg-sidebar-foreground/10 hover:text-sidebar-foreground"
                 }`}
               >
                 {item.label}
-              </span>
+              </button>
             ))}
           </nav>
         </div>
@@ -56,7 +57,11 @@ export function TopNav({ audience, onAudienceChange }) {
           Sign out
         </button>
       </div>
-      <div className="mx-auto flex max-w-6xl items-center gap-2 px-6 pb-3">
+      <div
+        className={`mx-auto flex max-w-6xl items-center gap-2 px-6 pb-3 ${
+          framing === "measure" ? "opacity-40" : ""
+        }`}
+      >
         {AUDIENCES.map((item) => (
           <button
             key={item.key}
