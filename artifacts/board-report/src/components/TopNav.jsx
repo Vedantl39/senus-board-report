@@ -1,4 +1,5 @@
 import { useAuth } from "@/context/AuthContext";
+import senusLogo from "@assets/senus_logo_trimmed.png";
 
 const FRAMING = [
   { key: "measure", label: "Measure" },
@@ -21,10 +22,14 @@ export function TopNav({ audience, onAudienceChange }) {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <div className="flex items-center gap-8">
           <div>
-            <p className="font-heading text-lg font-bold tracking-tight text-sidebar-foreground">
-              Senus PLC
+            <img
+              src={senusLogo}
+              alt="Senus PLC"
+              className="h-6 w-auto"
+            />
+            <p className="mt-1 text-xs text-sidebar-foreground/70">
+              Board Report
             </p>
-            <p className="text-xs text-sidebar-foreground/70">Board Report</p>
           </div>
           <nav className="flex items-center gap-1">
             {FRAMING.map((item) => (

@@ -40,6 +40,7 @@ AI-native board reporting platform for Senus PLC (a natural capital software com
 - `artifacts/board-report/src/components/charts/` (`RevenueTrendChart`, `EbitdaWaterfallChart`) — Recharts visualizations. The EBITDA bridge is a true waterfall built entirely from real disclosed/derived line items (revenue, gross profit, operating profit/loss, D&A, EBITDA) for whichever period has all of them — no invented figures.
 - `artifacts/board-report/src/components/Tooltip.jsx` — shared lightweight hover/focus tooltip (no extra dependency) used for traceability throughout `MetricsTable` and the KPI cards.
 - `artifacts/board-report/src/components/EmptyState.jsx` — styled empty state (icon + title + description) replacing plain "No data" text in `MetricsTable` and `RiskRegister`.
+- `attached_assets/senus_logo_trimmed.png` — the real Senus PLC logo lockup, background-removed and tightly cropped so it blends seamlessly into the dark green `TopNav` header (which shares the same brand green); imported via the `@assets` Vite alias in `TopNav.jsx`, replacing the plain "Senus PLC" text.
 
 ## Architecture decisions
 
