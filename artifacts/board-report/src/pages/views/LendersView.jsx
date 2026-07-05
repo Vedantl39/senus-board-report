@@ -20,7 +20,12 @@ export function LendersView({ data }) {
           Solvency &amp; Leverage
         </h2>
         <div className="mb-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
-          <KpiCard label="Net Assets / (Liabilities)" metric={netAssetsLiabilities} positiveIsGood />
+          <KpiCard
+            label="Net Assets / (Liabilities)"
+            metric={netAssetsLiabilities}
+            positiveIsGood
+            signLabels={{ positive: "Net Assets", negative: "Net Liabilities" }}
+          />
         </div>
       </section>
       <section>

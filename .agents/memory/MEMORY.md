@@ -8,3 +8,4 @@
 - [Logo asset cropping](logo-asset-cropping.md) — crop baked-in logo padding/taglines at the source image with ImageMagick; CSS margins/max-height can't remove pixels that are part of the raster.
 - [Screenshotting behind session auth](screenshotting-behind-session-auth.md) — temporarily bypass auth gate + session endpoint + SPA default tab state to screenshot protected views without the real password.
 - [Audience-view OR-query test coupling](audience-view-or-query-coupling.md) — a generic test expects every AUDIENCE_VIEWS entry to OR categories with metricNames; keep metricNames non-empty even when categories alone suffice.
+- [Secrets access differs by tool](secrets-access-by-tool.md) — the `bash` tool CAN read `process.env` secrets directly; the `code_execution` JS sandbox cannot.

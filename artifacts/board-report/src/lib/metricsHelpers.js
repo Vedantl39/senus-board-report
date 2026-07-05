@@ -9,13 +9,35 @@ export function findMetric(metrics, metricName, periodLabel) {
   );
 }
 
+/**
+ * True when `current` and `previous` are both present, both nonzero, and
+ * have opposite signs (e.g. net liabilities flipping to net assets). A
+ * percentage change across a sign flip is technically calculable but
+ * practically meaningless/misleading, so callers should show both raw
+ * values side by side instead of a "%" change in this case.
+ */
+export function hasSignFlip(current, previous) {
+  if (
+    current === null ||
+    current === undefined ||
+    previous === null ||
+    previous === undefined ||
+    current === 0 ||
+    previous === 0
+  ) {
+    return false;
+  }
+  return Math.sign(current) !== Math.sign(previous);
+}
+
 export function percentChange(current, previous) {
   if (
     current === null ||
     current === undefined ||
     previous === null ||
     previous === undefined ||
-    previous === 0
+    previous === 0 ||
+    hasSignFlip(current, previous)
   ) {
     return null;
   }
