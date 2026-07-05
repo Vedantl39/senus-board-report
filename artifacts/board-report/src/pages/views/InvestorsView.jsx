@@ -1,13 +1,16 @@
 import { MetricsTable } from "@/components/MetricsTable";
 import { RiskRegister } from "@/components/RiskRegister";
 import { KpiCard } from "@/components/kpi/KpiCard";
-import { findMetric, latestPeriod } from "@/lib/metricsHelpers";
+import { findLatestMetric } from "@/lib/metricsHelpers";
 
 export function InvestorsView({ data }) {
-  const period = latestPeriod(data?.metrics);
-  const roce = findMetric(data?.metrics, "roce", period);
-  const admissionPrice = findMetric(data?.metrics, "admission_price", period);
-  const sharePrice = findMetric(data?.metrics, "share_price_close", period);
+  // These are looked up independently per-metric (not pinned to the report's
+  // single "latest period") because admission_price/share_price_close are
+  // point-in-time facts that aren't necessarily re-disclosed every period —
+  // see findLatestMetric's doc comment.
+  const roce = findLatestMetric(data?.metrics, "roce");
+  const admissionPrice = findLatestMetric(data?.metrics, "admission_price");
+  const sharePrice = findLatestMetric(data?.metrics, "share_price_close");
 
   return (
     <div className="space-y-8">

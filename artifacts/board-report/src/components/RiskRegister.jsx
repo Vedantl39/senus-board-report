@@ -1,9 +1,15 @@
+import { useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { StatusPill } from "@/components/badges/StatusPill";
 import { UnauditedBadge } from "@/components/badges/UnauditedBadge";
 import { EmptyState } from "@/components/EmptyState";
 import { humanize, groupBy } from "@/lib/format";
 
+const DEFAULT_VISIBLE_PER_CATEGORY = 2;
+
 export function RiskRegister({ risks }) {
+  const [expandedCategories, setExpandedCategories] = useState(() => new Set());
+
   if (!risks || risks.length === 0) {
     return (
       <EmptyState
@@ -15,19 +21,35 @@ export function RiskRegister({ risks }) {
 
   const byCategory = groupBy(risks, (r) => r.category ?? "Other");
 
+  const toggleCategory = (category) => {
+    setExpandedCategories((prev) => {
+      const next = new Set(prev);
+      if (next.has(category)) {
+        next.delete(category);
+      } else {
+        next.add(category);
+      }
+      return next;
+    });
+  };
+
   return (
     <div className="space-y-6">
       {Array.from(byCategory.entries()).map(([category, items]) => {
         const ordered = [...items].sort(
           (a, b) => (a.materiality_rank ?? 999) - (b.materiality_rank ?? 999),
         );
+        const isExpanded = expandedCategories.has(category);
+        const visible = isExpanded ? ordered : ordered.slice(0, DEFAULT_VISIBLE_PER_CATEGORY);
+        const hiddenCount = ordered.length - visible.length;
+
         return (
           <div key={category}>
             <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-primary/80">
               {humanize(category)}
             </h3>
             <ul className="space-y-2">
-              {ordered.map((risk, index) => {
+              {visible.map((risk, index) => {
                 const payload = risk.payload ?? {};
                 const isMostMaterial = index === 0;
                 return (
@@ -72,6 +94,21 @@ export function RiskRegister({ risks }) {
                 );
               })}
             </ul>
+            {ordered.length > DEFAULT_VISIBLE_PER_CATEGORY ? (
+              <button
+                type="button"
+                onClick={() => toggleCategory(category)}
+                className="mt-2 flex items-center gap-1 text-xs font-medium text-primary hover:underline"
+              >
+                <ChevronDown
+                  className={`h-3.5 w-3.5 transition-transform ${isExpanded ? "rotate-180" : ""}`}
+                  aria-hidden="true"
+                />
+                {isExpanded
+                  ? "Show less"
+                  : `Show all in ${humanize(category)} (${hiddenCount} more)`}
+              </button>
+            ) : null}
           </div>
         );
       })}
