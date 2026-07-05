@@ -16,12 +16,12 @@ export function LoginPage() {
 
   return (
     <div className="theme-assiduous dark flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="w-full max-w-sm">
+      <div className="w-full max-w-md">
         <div className="mb-8 text-center">
           <img
             src={assiduousLogo}
             alt="Assiduous — Making Companies Financeable"
-            className="mx-auto h-auto max-h-24 w-full max-w-[280px] object-contain"
+            className="mx-auto h-auto max-h-56 w-full max-w-[420px] object-contain"
           />
           <h1 className="mt-4 text-2xl font-semibold text-foreground">
             Board Report Access
@@ -32,7 +32,7 @@ export function LoginPage() {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="space-y-4 rounded-xl border border-border bg-card p-6 shadow-lg"
+          className="mx-auto max-w-sm space-y-4 rounded-xl border border-border bg-card p-6 shadow-lg"
         >
           <div className="space-y-1.5">
             <label htmlFor="password" className="text-sm font-medium text-foreground">
