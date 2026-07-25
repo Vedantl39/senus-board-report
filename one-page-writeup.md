@@ -22,4 +22,4 @@ Month-over-month figures aren't available (Senus reports annually/semi-annually 
 ## What makes this different
 Every major decision — schema design, the AI/code boundary, the single-login scope call, data quality handling — is logged with its reasoning in `philosophy-log.md` (36+ entries), including the mistakes caught and corrected along the way. This wasn't written retroactively for the submission; it was built as the project went, which is why it includes real bugs, not just polished decisions.
 
-**Live app:** https://senus-board-report.replit.app (password: `Vedant@123`) · **GitHub:** https://github.com/Vedantl39/senus-board-report · **Demo:** [YouTube link]
+**Live app:** https://senus-board-report.replit.app (password: `Vedant@123`) · **GitHub:** https://github.com/Vedantl39/senus-board-report · **Demo:** [[YouTube link](https://www.youtube.com/watch?v=V6g-J6tUJs8)]
