@@ -2,7 +2,7 @@
 
 An interactive board report for Senus PLC (a real, recently-listed Irish natural capital management software company) built for four distinct audiences — Management, the Board, Equity Investors, and Credit Providers — from a single underlying data model, with AI-led extraction and commentary throughout.
 
-Built for the Assiduous Technology Graduate Assessment.
+Built for the Assiduous Technology Graduate Assessment. https://www.youtube.com/watch?v=V6g-J6tUJs8
 
 ## What this is
 
